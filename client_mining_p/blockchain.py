@@ -125,12 +125,10 @@ blockchain = Blockchain()
 @app.route('/mine', methods=['POST'])
 def mine():
     data = request.get_json()
-    print("post data", data)
 
     if not data['id'] or not data['proof']:
         return jsonify({"message":"Proof or Id not present"}), 400
         
-    print("current proof", data['proof'])
     result = blockchain.valid_proof(blockchain.last_block, data['proof'])
     if result:
         blockchain.new_block(data['proof'], blockchain.hash(blockchain.last_block))
