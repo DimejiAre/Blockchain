@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { Route } from 'react-router-dom';
+import Transactions from './components/Transactions';
+import Navigation from './components/Navigation';
+import UserForm from './components/UserForm';
+import './styles.scss'
 
 function App() {
+  const [user, setUser] = useState("")
+
+  const search = (formValue, actions) => {
+    const user = formValue.name
+    setUser(user)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Route path='/' render={props => <Navigation {...props} user={user}/>} />
+      <Route path='/' render={props => <UserForm {...props} search={search} />} />
+      <Route path='/' render={props => <Transactions {...props} user={user} />} />
     </div>
   );
 }
